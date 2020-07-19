@@ -1,10 +1,13 @@
 package ecc
 
 import (
+	"bytes"
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/sha256"
+	"crypto/x509"
+	"encoding/pem"
 	"github.com/ethereum/go-ethereum/crypto/ecies"
 	"math/big"
 )
@@ -58,6 +61,75 @@ func GenerateKeyEth() (*ecies.PrivateKey, *ecies.PublicKey) {
 	}
 	publicKey := privateKey.PublicKey
 	return privateKey, &publicKey
+}
+
+
+
+
+func SetPrivateKeyToPem(privateKey *ecdsa.PrivateKey) string {
+	stream, err1 := x509.MarshalECPrivateKey(privateKey)
+	if err1 != nil {
+		return ""
+	}
+	block := &pem.Block{
+		Type:    "ECC PRIVATE KEY",
+		Bytes:   stream,
+	}
+
+	var buf bytes.Buffer
+	err2 := pem.Encode(&buf, block)
+	if err2 != nil {
+		return ""
+	}
+
+	return buf.String()
+}
+
+func SetPublicKeyToPem(publicKey *ecdsa.PublicKey) string {
+	stream, err1 := x509.MarshalPKIXPublicKey(publicKey)
+	if err1 != nil {
+		return ""
+	}
+	block := &pem.Block{
+		Type:    "ECC PUBLIC KEY",
+		Bytes:   stream,
+	}
+
+	var buf bytes.Buffer
+	err2 := pem.Encode(&buf, block)
+	if err2 != nil {
+		return ""
+	}
+
+	return buf.String()
+}
+
+
+func GetPrivateKeyFromPem(privateKeyPem string) *ecdsa.PrivateKey {
+	block, err1 := pem.Decode([]byte(privateKeyPem))
+	if err1 != nil {
+		return nil
+	}
+
+	privateKey, err2 := x509.ParseECPrivateKey(block.Bytes)
+	if err2 != nil {
+		return nil
+	}
+
+	return privateKey
+}
+
+func GetPublicKeyFromPem(publicKeyPem string) *ecdsa.PublicKey {
+	block, err1 := pem.Decode([]byte(publicKeyPem))
+	if err1 != nil {
+		return nil
+	}
+	publicKey, err2 := x509.ParsePKIXPublicKey(block.Bytes)
+	if err2 != nil {
+		return nil
+	}
+
+	return publicKey.(*ecdsa.PublicKey)
 }
 
 

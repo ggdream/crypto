@@ -64,6 +64,11 @@ func SetEN(exp, mod string) *rsa.PublicKey
 func GetPrivateKey(hexKey string) *rsa.PrivateKey
 func GetPublicKey(hexKey string) *rsa.PublicKey
 
+func SetPrivateKeyToPem(privateKey *rsa.PrivateKey) string
+func SetPublicKeyToPem(publicKey *rsa.PublicKey) string
+func GetPrivateKeyFromPem(privateKeyPem string) *rsa.PrivateKey
+func GetPublicKeyFromPem(publicKeyPem string) *rsa.PublicKey
+
 
 // 加密解密
 func Encrypt(text []byte, publicKey *rsa.PublicKey) []byte
@@ -85,6 +90,12 @@ func Verify(text, sign []byte, publicKey *rsa.PublicKey) bool
 // 操作秘钥
 func GenerateKey(model int) (*ecdsa.PrivateKey, *ecdsa.PublicKey)
 func GenerateKeyEth() (*ecies.PrivateKey, *ecies.PublicKey)
+
+func SetPrivateKeyToPem(privateKey *ecdsa.PrivateKey) string
+func SetPublicKeyToPem(publicKey *ecdsa.PublicKey) string
+func GetPrivateKeyFromPem(privateKeyPem string) *ecdsa.PrivateKey
+func GetPublicKeyFromPem(publicKeyPem string) *ecdsa.PublicKey
+
 
 // 加密解密
 func Encrypt(text []byte, publicKey  *ecies.PublicKey) []byte

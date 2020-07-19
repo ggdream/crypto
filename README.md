@@ -57,9 +57,13 @@ func main() {
 // 操作秘钥
 func GenerateKey(bits int) (*rsa.PrivateKey, *rsa.PublicKey)
 func GenerateHexKey(bits int) (string, string)
-func GetEN(publicKey *rsa.PublicKey) (int, *big.Int)
+
+func GetEN(publicKey *rsa.PublicKey) (string, string)
+func SetEN(exp, mod string) *rsa.PublicKey
+
 func GetPrivateKey(hexKey string) *rsa.PrivateKey
 func GetPublicKey(hexKey string) *rsa.PublicKey
+
 
 // 加密解密
 func Encrypt(text []byte, publicKey *rsa.PublicKey) []byte

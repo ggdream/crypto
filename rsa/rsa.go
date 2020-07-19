@@ -8,6 +8,7 @@ import (
 	"crypto/x509"
 	"encoding/hex"
 	"math/big"
+	"strconv"
 )
 
 
@@ -42,15 +43,40 @@ func GenerateHexKey(bits int) (string, string) {
 
 
 // 获取公钥的指数和模数
-func GetEN(publicKey *rsa.PublicKey) (int, *big.Int) {
-	return publicKey.E, publicKey.N
+func GetEN(publicKey *rsa.PublicKey) (string, string) {
+	return strconv.FormatInt(int64(publicKey.E), 16), publicKey.N.Text(16)
+}
+
+
+func SetEN(exp, mod string) *rsa.PublicKey {
+	e, err1 := strconv.ParseInt(exp, 16, 0)
+	if err1 != nil {
+		return nil
+	}
+
+	bigN := new(big.Int)
+	bigN, err2 := bigN.SetString(mod, 16)
+	if err2 != true {
+		return nil
+	}
+	
+	return &rsa.PublicKey{
+		N: bigN,
+		E: int(e),
+	}
 }
 
 
 // gain rsa privateKey
 func GetPrivateKey(hexKey string) *rsa.PrivateKey {
-	key, _ := hex.DecodeString(hexKey)
-	privateKey, _ := x509.ParsePKCS1PrivateKey(key)
+	key, err1 := hex.DecodeString(hexKey)
+	if err1 != nil {
+		return nil
+	}
+	privateKey, err2 := x509.ParsePKCS1PrivateKey(key)
+	if err2 != nil {
+		return nil
+	}
 
 	return privateKey
 }
@@ -58,8 +84,15 @@ func GetPrivateKey(hexKey string) *rsa.PrivateKey {
 
 // gain rsa publicKey
 func GetPublicKey(hexKey string) *rsa.PublicKey {
-	key, _ := hex.DecodeString(hexKey)
-	publicInterface, _ := x509.ParsePKIXPublicKey(key)
+	key, err1 := hex.DecodeString(hexKey)
+	if err1 != nil {
+		return nil
+	}
+	publicInterface, err2 := x509.ParsePKIXPublicKey(key)
+	if err2 != nil {
+		return nil
+	}
+
 	publicKey := publicInterface.(*rsa.PublicKey)
 
 	return publicKey

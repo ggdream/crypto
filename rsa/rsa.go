@@ -137,10 +137,7 @@ func SetPublicKeyToPem(publicKey *rsa.PublicKey) string {
 
 
 func GetPrivateKeyFromPem(privateKeyPem string) *rsa.PrivateKey {
-	block, err1 := pem.Decode([]byte(privateKeyPem))
-	if err1 != nil {
-		return nil
-	}
+	block, _ := pem.Decode([]byte(privateKeyPem))
 
 	privateKey, err2 := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err2 != nil {
@@ -151,10 +148,8 @@ func GetPrivateKeyFromPem(privateKeyPem string) *rsa.PrivateKey {
 }
 
 func GetPublicKeyFromPem(publicKeyPem string) *rsa.PublicKey {
-	block, err1 := pem.Decode([]byte(publicKeyPem))
-	if err1 != nil {
-		return nil
-	}
+	block, _ := pem.Decode([]byte(publicKeyPem))
+
 	publicKey, err2 := x509.ParsePKCS1PublicKey(block.Bytes)
 	if err2 != nil {
 		return nil

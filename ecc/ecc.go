@@ -106,10 +106,7 @@ func SetPublicKeyToPem(publicKey *ecdsa.PublicKey) string {
 
 
 func GetPrivateKeyFromPem(privateKeyPem string) *ecdsa.PrivateKey {
-	block, err1 := pem.Decode([]byte(privateKeyPem))
-	if err1 != nil {
-		return nil
-	}
+	block, _ := pem.Decode([]byte(privateKeyPem))
 
 	privateKey, err2 := x509.ParseECPrivateKey(block.Bytes)
 	if err2 != nil {
@@ -120,10 +117,8 @@ func GetPrivateKeyFromPem(privateKeyPem string) *ecdsa.PrivateKey {
 }
 
 func GetPublicKeyFromPem(publicKeyPem string) *ecdsa.PublicKey {
-	block, err1 := pem.Decode([]byte(publicKeyPem))
-	if err1 != nil {
-		return nil
-	}
+	block, _ := pem.Decode([]byte(publicKeyPem))
+
 	publicKey, err2 := x509.ParsePKIXPublicKey(block.Bytes)
 	if err2 != nil {
 		return nil

@@ -29,6 +29,7 @@ import (
 	"github.com/ggdream/crypto/rsa"
 )
 
+
 func main() {
 	pri, pub := rsa.GenerateKey(1024)
     
@@ -37,6 +38,7 @@ func main() {
     
 	plaint := rsa.Decrypt(cipher, pri)
 	fmt.Println(string(plaint))
+}
 ~~~
 
 

@@ -7,25 +7,23 @@ import (
 
 
 
+// EnBase64 ...
 func EnBase64(src []byte) string {
 	return base64.StdEncoding.EncodeToString(src)
 }
-func DeBase64(src string) []byte {
-	dst, err := base64.StdEncoding.DecodeString(src)
-	if err != nil {
-		return nil
-	}
-	return dst
+
+// DeBase64 ...
+func DeBase64(src string) ([]byte, error) {
+	return base64.StdEncoding.DecodeString(src)
 }
 
 
+// EnHex ...
 func EnHex(src []byte) string {
 	return hex.EncodeToString(src)
 }
-func DeHex(src string) []byte {
-	dst, err := hex.DecodeString(src)
-	if err != nil {
-		return nil
-	}
-	return dst
+
+// DeHex ...
+func DeHex(src string) ([]byte, error) {
+	return hex.DecodeString(src)
 }

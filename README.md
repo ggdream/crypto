@@ -2,11 +2,8 @@
 
 ## 一、介绍
 
-Golang原生包中提供了许多接口，给了我们很多选择。但我们往往使用的就那么几个，每搞个项目就封装一次，未免太过麻烦。（啊对，是我受不了了！！😫）。
-
-在这个包里，我封装了与RSA、AES和ECC相关的加解密以及签名验签的函数，生成随机秘钥的函数。除此之外，将常用的哈希函数、hex和base64编解码也封装了一下。
-
-我的这个包没有金贵的地方值得大家学习，只是希望能减轻你的封装负担。如果你有更好的封装建议，请联系我QQ1586616064或邮箱gdream@yeah.net。😘😘
+！！😫
+。😘😘
 
 
 
@@ -15,7 +12,7 @@ Golang原生包中提供了许多接口，给了我们很多选择。但我们�
 ## 二、安装
 
 ~~~shell
-go get github.com/ggdream/crypto
+go get -u github.com/ggdream/crypto
 ~~~
 
 
@@ -180,5 +177,21 @@ func DeBase64(src string) []byte
 // 16进制编解码
 func EnHex(src []byte) string
 func DeHex(src string) []byte
+~~~
+
+
+
+### 7. byte[]/string
+
+~~~go
+// file: github.com/ggdream/crypto/ptr.go
+// to change struct by using ptr.
+
+
+// byte[]转string
+func SliceToString(data []byte) string
+
+// string转byte[]
+func StringToSlice(data string) []byte
 ~~~
 

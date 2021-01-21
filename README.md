@@ -62,7 +62,7 @@ func Encrypt(text []byte, publicKey *rsa.PublicKey) []byte
 func Decrypt(text []byte, privateKey *rsa.PrivateKey) []byte
 
 // 签名验签
-func Sign(text []byte, privateKey *rsa.PrivateKey) []byte
+func Sign(text []byte, privateKey *rsa.PrivateKey) ([]byte, error)
 func Verify(text, sign []byte, publicKey *rsa.PublicKey) bool
 ~~~
 

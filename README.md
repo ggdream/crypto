@@ -5,19 +5,11 @@
 ！！😫
 。😘😘
 
-
-
-
-
 ## 二、安装
 
 ~~~shell
 go get -u github.com/ggdream/crypto
 ~~~
-
-
-
-
 
 ## 三、例子
 
@@ -40,10 +32,6 @@ func main() {
 	fmt.Println(string(plaint))
 }
 ~~~
-
-
-
-
 
 ## 四、函数签名
 
@@ -78,8 +66,6 @@ func Sign(text []byte, privateKey *rsa.PrivateKey) []byte
 func Verify(text, sign []byte, publicKey *rsa.PublicKey) bool
 ~~~
 
-
-
 ### 2. ECC
 
 ~~~go
@@ -105,8 +91,6 @@ func Sign(text []byte, privateKey *ecdsa.PrivateKey) ([]byte, []byte)
 func Verify(text, rBytes, sBytes []byte, publicKey *ecdsa.PublicKey) bool
 ~~~
 
-
-
 ### 3. AES
 
 ~~~go
@@ -129,10 +113,6 @@ func Encrypt(text, key, iv []byte) []byte
 func Decrypt(text, key, iv []byte) []byte
 ~~~
 
-
-
-
-
 ### 4. KEY
 
 ~~~go
@@ -149,22 +129,31 @@ func Gen32ByRand() []byte
 func Gen64ByRand() []byte
 ~~~
 
-
-
-
-
 ### 5. HASH
 
 ~~~go
 // file: github.com/ggdream/crypto/hashers.go
+const (
+	DefineMD5			= "md5"
+	DefineSHA1			= "sha1"
+	DefineSHA224		= "sha224"
+	DefineSHA256		= "sha256"
+	DefineSHA384		= "sha384"
+	DefineSHA512		= "sha512"
+	DefineSHA3224		= "sha3-224"
+	DefineSHA3256		= "sha3-256"
+	DefineSHA3384		= "sha3-384"
+	DefineSHA3512		= "sha3-512"
+)
 
-func MD5(text []byte) string
-func SHA256(text []byte) []byte
-func SHA512(text []byte) []byte
+type Hasher struct
+func Hash(algorithm string, data []byte) (string, error)
+func (h *Hasher) GetHasher() hash.Hash
+func (h *Hasher) ToBytes() ([]byte, error)
+func (h *Hasher) ToBase64() (string, error)
+func (h *Hasher) ToHex() (string, error)
 func FileMD5(file io.Reader) string
 ~~~
-
-
 
 ### 6. encode/decode
 
@@ -181,8 +170,6 @@ func EnHex(src []byte) string
 func DeHex(src string) []byte
 ~~~
 
-
-
 ### 7. byte[]/string
 
 ~~~go
@@ -196,4 +183,3 @@ func SliceToString(data []byte) string
 // string转byte[]
 func StringToSlice(data string) []byte
 ~~~
-

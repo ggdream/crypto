@@ -34,7 +34,7 @@ func main() {
 	pri, pub := rsa.GenerateKey(1024)
     
 	cipher := rsa.Encrypt([]byte("我喜欢你"), pub)
-	fmt.Println(cippher)
+	fmt.Println(cipher)
     
 	plaint := rsa.Decrypt(cipher, pri)
 	fmt.Println(string(plaint))
